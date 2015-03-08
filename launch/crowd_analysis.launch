@@ -1,0 +1,9 @@
+<launch>
+  <node name="camera_bridge" pkg="camera_bridge" type="camera_bridge" />
+  <node name="background_substraction" pkg="crowd_analysis" type="background_substraction" />
+  <node name="people_counting" pkg="crowd_analysis" type="people_counting" />
+  <node pkg="rosserial_python" type="serial_node.py" name="rosserial_crowd" output="screen">
+      <param name="~port" value="/dev/ttyACM1" />
+      <param name="~baud" value="57600" />
+  </node>
+</launch>

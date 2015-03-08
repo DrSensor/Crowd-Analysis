@@ -1,0 +1,3 @@
+/opt/ros/indigo/include
+src/camera_test/include
+src/crowd_analysis/include

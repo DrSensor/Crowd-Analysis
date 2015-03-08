@@ -1,0 +1,8 @@
+prefix=/home/wildan/cctv_ws/devel
+
+Name: camera_bridge
+Description: Description of camera_bridge
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/wildan/cctv_ws/devel/lib 
+Requires: 

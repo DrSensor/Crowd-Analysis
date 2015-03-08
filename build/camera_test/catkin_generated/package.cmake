@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "camera_test")
+set(camera_test_MAINTAINER "wildan <wildan@todo.todo>")
+set(camera_test_DEPRECATED "")
+set(camera_test_VERSION "0.0.0")
+set(camera_test_BUILD_DEPENDS "roscpp" "cv_bridge")
+set(camera_test_RUN_DEPENDS "roscpp" "cv_bridge")
+set(camera_test_BUILDTOOL_DEPENDS "catkin")

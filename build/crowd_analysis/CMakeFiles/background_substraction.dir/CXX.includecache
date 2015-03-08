@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wildan/cctv_ws/src/crowd_analysis/include/AdaptiveBackgroundLearning.h
+iostream
+-
+opencv2/opencv.hpp
+-
+IBGS.h
+/home/wildan/cctv_ws/src/crowd_analysis/include/IBGS.h
+
+/home/wildan/cctv_ws/src/crowd_analysis/include/IBGS.h
+opencv2/opencv.hpp
+-
+
+/home/wildan/cctv_ws/src/crowd_analysis/src/AdaptiveBackgroundLearning.cpp
+AdaptiveBackgroundLearning.h
+/home/wildan/cctv_ws/src/crowd_analysis/src/AdaptiveBackgroundLearning.h
+

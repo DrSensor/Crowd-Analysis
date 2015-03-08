@@ -1,0 +1,8 @@
+prefix=/home/wildan/cctv_ws/install
+
+Name: crowd_analysis
+Description: Description of crowd_analysis
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/wildan/cctv_ws/install/lib 
+Requires: 

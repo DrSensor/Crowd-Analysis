@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "camera_bridge")
+set(camera_bridge_MAINTAINER "wildan <fahmi.akbar.w@mail.ugm.ac.id>")
+set(camera_bridge_DEPRECATED "")
+set(camera_bridge_VERSION "0.0.0")
+set(camera_bridge_BUILD_DEPENDS "roscpp" "cv_bridge")
+set(camera_bridge_RUN_DEPENDS "roscpp" "cv_bridge")
+set(camera_bridge_BUILDTOOL_DEPENDS "catkin")

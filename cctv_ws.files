@@ -1,0 +1,15 @@
+build/CMakeFiles/2.8.12.2/CompilerIdC/CMakeCCompilerId.c
+build/CMakeFiles/2.8.12.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
+src/camera_test/src/camera.cpp
+src/camera_bridge/src/camera.cpp
+src/crowd_analysis/src/background_substraction.cpp
+src/crowd_analysis/src/people_counting.cpp
+src/crowd_analysis/src/AdaptiveBackgroundLearning.cpp
+src/camera_test/src/AdaptiveBackgroundLearning.cpp
+src/camera_test-build/CMakeFiles/2.8.12.2/CompilerIdC/CMakeCCompilerId.c
+src/camera_test-build/CMakeFiles/2.8.12.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
+src/camera_test/package.xml
+src/camera_test/CMakeLists.txt
+src/camera_test/src/image_subscribe.cpp
+addons.cpp
+launch/crowd_analysis.launch

@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "crowd_analysis")
+set(crowd_analysis_MAINTAINER "wildan <fahmi.akbar.w@mail.ugm.ac.id>")
+set(crowd_analysis_DEPRECATED "")
+set(crowd_analysis_VERSION "0.0.0")
+set(crowd_analysis_BUILD_DEPENDS "roscpp" "image_transport")
+set(crowd_analysis_RUN_DEPENDS "roscpp" "image_transport")
+set(crowd_analysis_BUILDTOOL_DEPENDS "catkin")
