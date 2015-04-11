@@ -41,6 +41,8 @@ public:
   AdaptiveBackgroundLearning();
   ~AdaptiveBackgroundLearning();
 
+  void setAlpha(double alpha);
+  void setThreshold(int threshold);
   void process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel);
 
 private:

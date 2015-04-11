@@ -6,10 +6,13 @@
 
 double fps=30;
 cv::Mat src, img_buf;
+double alpha_param;
+int threshold_param;
+int kernel_param;
 cv_bridge::CvImage imgFG_msg;
 cv_bridge::CvImage imgBG_msg;
 
-IBGS *bgs;
+AdaptiveBackgroundLearning *bgs;
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 {
@@ -29,28 +32,32 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "background_substraction");
     ros::NodeHandle node;
 
-    argc--; argv++;
-    while( argc && *argv[0] == '-' )
-    {
-        if( !strcmp(*argv, "-fps") && ( argc > 1 ) )
-        {
-            fps = atof(*(argv+1));
-            printf("With %ffps\n",fps);
-            argc--; argv++;
-        }
-        argc--; argv++;
-    }
+    ros::param::param<double>("alpha", alpha_param, 0.5);
+    ros::param::param<int>("threshold", threshold_param, 15);
+    ros::param::param<int>("kernel", kernel_param, 15);
+
+    // argc--; argv++;
+    // while( argc && *argv[0] == '-' )
+    // {
+    //     if( !strcmp(*argv, "-fps") && ( argc > 1 ) )
+    //     {
+    //         fps = atof(*(argv+1));
+    //         printf("With %ffps\n",fps);
+    //         argc--; argv++;
+    //     }
+    //     argc--; argv++;
+    // }
 
     bgs = new AdaptiveBackgroundLearning;
+    bgs->setAlpha(alpha_param);
+    bgs->setThreshold(threshold_param);
     imgBG_msg.encoding = "bgr8";
     imgFG_msg.encoding = "bgr8";
 
-    ros::Publisher imgFG_pub = node.advertise<sensor_msgs::Image>
-            ("camera/foreground_img", 1000);
-    ros::Publisher imgBG_pub = node.advertise<sensor_msgs::Image>
-                ("camera/background_img", 1000);
+    ros::Publisher imgFG_pub = node.advertise<sensor_msgs::Image>("camera/foreground_img", 100);
+    ros::Publisher imgBG_pub = node.advertise<sensor_msgs::Image>("camera/background_img", 100);
     image_transport::ImageTransport it(node);
-    image_transport::Subscriber img_sub = it.subscribe("camera/image", 10, imageCallback);
+    image_transport::Subscriber img_sub = it.subscribe("image", 10, imageCallback);
 
     ros::Rate loop_rate(fps);
 
@@ -58,8 +65,8 @@ int main(int argc, char **argv)
     {
         if ( ! src.empty()) {
             bgs->process(src, img_buf, imgBG_msg.image);
-            cv::Mat element = cv::getStructuringElement( 2, cv::Size( 3, 3 ), cv::Point( 1, 1 ) );
-            cv::morphologyEx( img_buf, img_buf, CV_MOP_OPEN, element );
+            cv::Mat element = cv::getStructuringElement( cv::MORPH_RECT, cv::Size( kernel_param, kernel_param));
+            cv::morphologyEx( img_buf, img_buf, cv::MORPH_OPEN, element );
             cv::cvtColor(img_buf,img_buf,CV_GRAY2BGR);
             src &= img_buf;
             imgFG_msg.image = src;

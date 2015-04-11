@@ -1,5 +1,5 @@
 # generated from catkin/cmake/template/order_packages.context.py.in
-source_root_dir = "/home/wildan/cctv_ws/src"
+source_root_dir = "/home/wildan/Crowd-Analysis/src"
 whitelisted_packages = "".split(';') if "" != "" else []
 blacklisted_packages = "".split(';') if "" != "" else []
 underlay_workspaces = "/opt/ros/indigo".split(';') if "/opt/ros/indigo" != "" else []

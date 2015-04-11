@@ -1,8 +1,8 @@
-prefix=/home/wildan/cctv_ws/devel
+prefix=/home/wildan/Crowd-Analysis/devel
 
 Name: camera_test
 Description: Description of camera_test
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/wildan/cctv_ws/devel/lib 
+Libs: -L/home/wildan/Crowd-Analysis/devel/lib 
 Requires: 

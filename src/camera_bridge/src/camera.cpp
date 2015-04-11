@@ -2,12 +2,19 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/highgui/highgui.hpp>
 
+
+
+
 #include <curl/curl.h>
 
 //function to retrieve the image as Cv::Mat data type
 cv::Mat curlImg(const char *url);
 double fps=30;
-int device=-1;
+
+std::string url_param, filename_param;
+int device_param=-1;
+int width_param=640, height_param=480;
+
 bool isSnapshot=false;
 bool isCamOpened=false;
 
@@ -16,40 +23,42 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "camera_bridge");
     ros::NodeHandle node;
 
-    std::string topic_name = "camera/image";
-    std::string url_image;
+    isSnapshot = ros::param::get("url", url_param);
+    ros::param::param<int>("device", device_param, -1);
+    ros::param::param<int>("width", width_param, 640);
+    ros::param::param<int>("height", height_param, 480);
+    ros::param::param<double>("fps", fps, 28);
 
-    argc--; argv++;
-    while( argc && *argv[0] == '-' )
-    {
-        if( !strcmp(*argv, "-url") && ( argc > 1 ) )
-        {
-            ROS_INFO("Opening ");
-            isSnapshot=true;
-            url_image = *(argv+1);
-            printf("Using image sequence form %s\n",url_image.c_str());
-            argc--; argv++;
-        }
-        else if( !strcmp(*argv, "-device") && ( argc > 1 ) )
-        {
-            ROS_INFO("Opening ");
-            isSnapshot=false;
-//            topic_name.append(*(argv+1));
-            device = atoi(*(argv+1));
-            printf("Using image sequence form %s\n",*(argv+1));
-            argc--; argv++;
-        }
-        if( !strcmp(*argv, "-fps") && ( argc > 1 ) )
-        {
-            fps = atof(*(argv+1));
-            printf("With %ffps\n",fps);
-            argc--; argv++;
-        }
-        argc--; argv++;
-    }
+//     argc--; argv++;
+//     while( argc && *argv[0] == '-' )
+//     {
+//         if( !strcmp(*argv, "-url") && ( argc > 1 ) )
+//         {
+//             ROS_INFO("Opening ");
+//             isSnapshot=true;
+//             url_image = *(argv+1);
+//             printf("Using image sequence form %s\n",url_image.c_str());
+//             argc--; argv++;
+//         }
+//         else if( !strcmp(*argv, "-device") && ( argc > 1 ) )
+//         {
+//             ROS_INFO("Opening ");
+//             isSnapshot=false;
+// //            topic_name.append(*(argv+1));
+//             device = atoi(*(argv+1));
+//             printf("Using image sequence form %s\n",*(argv+1));
+//             argc--; argv++;
+//         }
+//         if( !strcmp(*argv, "-fps") && ( argc > 1 ) )
+//         {
+//             fps = atof(*(argv+1));
+//             printf("With %ffps\n",fps);
+//             argc--; argv++;
+//         }
+//         argc--; argv++;
+//     }
 
-    ros::Publisher image_pub = node.advertise<sensor_msgs::Image>
-            (topic_name, 1000);
+    ros::Publisher image_pub = node.advertise<sensor_msgs::Image>("camera", 100);
     ros::Rate loop_rate(fps);
 
     cv_bridge::CvImage img_msg;
@@ -58,25 +67,28 @@ int main(int argc, char *argv[])
     img_msg.encoding = "bgr8";
 
     if (!isSnapshot) {
-        isCamOpened = cam.open(device);
-        cam.set(CV_CAP_PROP_FPS, fps*2);
+        if (ros::param::get("filename", filename_param)) 
+            isCamOpened = cam.open(filename_param);
+        else
+            isCamOpened = cam.open(device_param);
+        cam.set(CV_CAP_PROP_FPS, fps*1.3);
         if(isCamOpened) {
-            cam.set(CV_CAP_PROP_FRAME_HEIGHT, atoi(argv[3]));
-            cam.set(CV_CAP_PROP_FRAME_WIDTH, atoi(argv[4]));
+            cam.set(CV_CAP_PROP_FRAME_HEIGHT, height_param);
+            cam.set(CV_CAP_PROP_FRAME_WIDTH, width_param);
         }
     }
 
     if (isCamOpened)
-        ROS_INFO("Opening /dev/%s %ffps %dx%d", topic_name.c_str(), fps,
+        ROS_INFO("Opening /dev/video%d %ffps %dx%d", device_param, fps,
                  (int)cam.get(CV_CAP_PROP_FRAME_WIDTH), (int)cam.get(CV_CAP_PROP_FRAME_HEIGHT));
-    else if ( ! isSnapshot) ROS_ERROR("Can't open /dev/%s", topic_name.c_str());
+    else if ( ! isSnapshot) ROS_ERROR("Unknown error");
 
     while (ros::ok())
     {
         if (isCamOpened) cam >> img_msg.image;
         else {
             if (!isSnapshot) ROS_ERROR("it's not snapshot");
-            img_msg.image = curlImg(url_image.c_str());
+            img_msg.image = curlImg(url_param.c_str());
         }
 
         image_pub.publish(img_msg.toImageMsg());

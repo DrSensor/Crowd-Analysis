@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/wildan/cctv_ws/src/crowd_analysis/src/people_counting.cpp" "/home/wildan/cctv_ws/build/crowd_analysis/CMakeFiles/people_counting.dir/src/people_counting.cpp.o"
+  "/home/wildan/Crowd-Analysis/src/crowd_analysis/src/people_counting.cpp" "/home/wildan/Crowd-Analysis/build/crowd_analysis/CMakeFiles/people_counting.dir/src/people_counting.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -23,7 +23,7 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 SET(CMAKE_C_TARGET_INCLUDE_PATH
   "/usr/include/opencv"
   "/opt/ros/indigo/include"
-  "/home/wildan/cctv_ws/src/crowd_analysis/include"
+  "/home/wildan/Crowd-Analysis/src/crowd_analysis/include"
   )
 SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
 SET(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

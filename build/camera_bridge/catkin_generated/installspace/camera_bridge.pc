@@ -1,8 +1,8 @@
-prefix=/home/wildan/cctv_ws/install
+prefix=/home/wildan/Crowd-Analysis/install
 
 Name: camera_bridge
 Description: Description of camera_bridge
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/wildan/cctv_ws/install/lib 
+Libs: -L/home/wildan/Crowd-Analysis/install/lib 
 Requires: 

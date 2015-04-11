@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/wildan/cctv_ws/src/camera_bridge/src/camera.cpp" "/home/wildan/cctv_ws/build/camera_bridge/CMakeFiles/camera_bridge.dir/src/camera.cpp.o"
+  "/home/wildan/Crowd-Analysis/src/camera_bridge/src/camera.cpp" "/home/wildan/Crowd-Analysis/build/camera_bridge/CMakeFiles/camera_bridge.dir/src/camera.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

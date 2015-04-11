@@ -1,8 +1,8 @@
-prefix=/home/wildan/cctv_ws/devel
+prefix=/home/wildan/Crowd-Analysis/devel
 
 Name: crowd_analysis
 Description: Description of crowd_analysis
 Version: 0.0.0
-Cflags: 
-Libs: -L/home/wildan/cctv_ws/devel/lib 
+Cflags: -I/home/wildan/Crowd-Analysis/src/crowd_analysis/include
+Libs: -L/home/wildan/Crowd-Analysis/devel/lib 
 Requires: 

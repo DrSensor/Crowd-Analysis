@@ -27,15 +27,27 @@ AdaptiveBackgroundLearning::~AdaptiveBackgroundLearning()
   std::cout << "~AdaptiveBackgroundLearning()" << std::endl;
 }
 
+void AdaptiveBackgroundLearning::setAlpha(double alpha)
+{
+  this->alpha = alpha;
+}
+
+void AdaptiveBackgroundLearning::setThreshold(int threshold)
+{
+  this->threshold = threshold;
+  if (threshold <= 0)
+    enableThreshold = false; 
+}
+
 void AdaptiveBackgroundLearning::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel)
 {
   if(img_input.empty())
     return;
 
-  loadConfig();
+  // loadConfig();
 
-  if(firstTime)
-    saveConfig();
+  // if(firstTime)
+  //   saveConfig();
 
   if(img_background.empty())
     img_input.copyTo(img_background);

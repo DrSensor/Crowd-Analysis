@@ -1,8 +1,8 @@
-# Install script for directory: /home/wildan/cctv_ws/src/camera_bridge
+# Install script for directory: /home/wildan/Crowd-Analysis/src/camera_bridge
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/wildan/cctv_ws/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/wildan/Crowd-Analysis/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/wildan/cctv_ws/build/camera_bridge/catkin_generated/installspace/camera_bridge.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/wildan/Crowd-Analysis/build/camera_bridge/catkin_generated/installspace/camera_bridge.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/camera_bridge/cmake" TYPE FILE FILES
-    "/home/wildan/cctv_ws/build/camera_bridge/catkin_generated/installspace/camera_bridgeConfig.cmake"
-    "/home/wildan/cctv_ws/build/camera_bridge/catkin_generated/installspace/camera_bridgeConfig-version.cmake"
+    "/home/wildan/Crowd-Analysis/build/camera_bridge/catkin_generated/installspace/camera_bridgeConfig.cmake"
+    "/home/wildan/Crowd-Analysis/build/camera_bridge/catkin_generated/installspace/camera_bridgeConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/camera_bridge" TYPE FILE FILES "/home/wildan/cctv_ws/src/camera_bridge/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/camera_bridge" TYPE FILE FILES "/home/wildan/Crowd-Analysis/src/camera_bridge/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

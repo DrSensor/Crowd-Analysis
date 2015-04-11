@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/wildan/cctv_ws/src/camera_bridge/src/camera.cpp
+/home/wildan/Crowd-Analysis/src/camera_bridge/src/camera.cpp
 ros/ros.h
 -
 cv_bridge/cv_bridge.h

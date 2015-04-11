@@ -1,8 +1,8 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/camera_test_node.dir/src/camera.cpp.o"
   "CMakeFiles/camera_test_node.dir/src/AdaptiveBackgroundLearning.cpp.o"
-  "/home/wildan/cctv_ws/devel/lib/camera_test/camera_test_node.pdb"
-  "/home/wildan/cctv_ws/devel/lib/camera_test/camera_test_node"
+  "/home/wildan/Crowd-Analysis/devel/lib/camera_test/camera_test_node.pdb"
+  "/home/wildan/Crowd-Analysis/devel/lib/camera_test/camera_test_node"
 )
 
 # Per-language clean rules from dependency scanning.
