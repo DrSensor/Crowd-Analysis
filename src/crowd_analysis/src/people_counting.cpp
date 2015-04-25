@@ -39,11 +39,11 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "people_counting");
     ros::NodeHandle node;
 
-    ros::param::param<std::string>("dataset", fileDataset_param, "haarcascade_upperbody.xml");
-    ros::param::param<double>("scaleFactor", scaleFactor_param, 0.1);
-    ros::param::param<int>("minNeighbors", minNeighbors_param, 0);
+    ros::param::param<std::string>(ros::this_node::getName() + "dataset", fileDataset_param, "haarcascade_upperbody.xml");
+    ros::param::param<double>(ros::this_node::getName() + "scaleFactor", scaleFactor_param, 0.1);
+    ros::param::param<int>(ros::this_node::getName() + "minNeighbors", minNeighbors_param, 0);
     // ros::param::param<double>("minSize", minSize_param, 0);
-    ros::param::param<double>("maxSize", maxSize_param, 1.0);
+    ros::param::param<double>(ros::this_node::getName() + "maxSize", maxSize_param, 1.0);
 
     // argc--; argv++;
     // while( argc && *argv[0] == '-' )

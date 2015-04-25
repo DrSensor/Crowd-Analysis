@@ -32,9 +32,9 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "background_substraction");
     ros::NodeHandle node;
 
-    ros::param::param<double>("alpha", alpha_param, 0.5);
-    ros::param::param<int>("threshold", threshold_param, 15);
-    ros::param::param<int>("kernel", kernel_param, 15);
+    ros::param::param<double>(ros::this_node::getName() + "alpha", alpha_param, 0.5);
+    ros::param::param<int>(ros::this_node::getName() + "threshold", threshold_param, 15);
+    ros::param::param<int>(ros::this_node::getName() + "kernel", kernel_param, 15);
 
     // argc--; argv++;
     // while( argc && *argv[0] == '-' )

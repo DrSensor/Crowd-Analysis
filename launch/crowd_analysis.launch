@@ -1,30 +1,30 @@
 <launch>
   <node name="camera_bridge" pkg="camera_bridge" type="camera_bridge">
-  	<remap form="camera" to="crowd/camera" />
+	<remap from="camera" to="crowd/camera" />
 
-  	<!-- <param name="filename" type="str" value="" /> -->
-  	<param name="url" type="str" value="" />
-  	<!-- <param name="device" type="int" value="" /> -->
+	<!-- <param name="filename" type="str" value="$(find crowd_analysis)/test_data/alone.mp4" /> -->
+	<!-- <param name="url" type="str" value="" /> -->
+	<!-- <param name="device" type="int" value="" /> -->
 
-  	<param name="width" type="int" value="640" />
-  	<param name="height" type="int" value="480" />
-  	<param name="fps" type="double" value="30" />
+	<param name="width" type="int" value="640" />
+	<param name="height" type="int" value="480" />
+	<param name="fps" type="double" value="30" />
   </node>
   <node name="background_substraction" pkg="crowd_analysis" type="background_substraction">
-  	<remap form="image" to="crowd/camera" />
-  	<remap form="camera/foreground_img" to="crowd/foreground_img" />
-	<remap form="camera/background_img" to="crowd/background_img" />
+  	<remap from="image" to="crowd/camera" />
+  	<remap from="camera/foreground_img" to="crowd/foreground_img" />
+	<remap from="camera/background_img" to="crowd/background_img" />
 
-  	<param name="alpha" type="double" value="" />
-  	<param name="threshold" type="int" value="" />
-  	<param name="kernel" type="int" value="" />
+  	<param name="alpha" type="double" value="0.3" />
+  	<param name="threshold" type="int" value="1" />
+  	<param name="kernel" type="int" value="3" />
   </node>
   <node name="people_counting" pkg="crowd_analysis" type="people_counting">
-  	<remap form="image" to="crowd/foreground_img" />
-  	<remap form="crowd/count_img" to="crowd/count_img" />
-	<remap form="crowd/people_count" to="crowd/people_count" />
+  	<remap from="image" to="crowd/foreground_img" />
+  	<remap from="crowd/count_img" to="crowd/count_img" />
+	<remap from="crowd/people_count" to="crowd/people_count" />
 
-  	<param name="dataset" value="$(find crowd_analysis)/data/haarcascade_upperbody.xml" />
+  	<param name="dataset" type="str" value="$(find crowd_analysis)/data/haarcascade_upperbody.xml" />
   	<param name="scaleFactor" type="double" value="0.1" />
   	<param name="minNeighbors" type="int" value="0" />
   	<param name="maxSize" type="double" value="0.5" />

@@ -2,9 +2,6 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/highgui/highgui.hpp>
 
-
-
-
 #include <curl/curl.h>
 
 //function to retrieve the image as Cv::Mat data type
@@ -23,11 +20,11 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "camera_bridge");
     ros::NodeHandle node;
 
-    isSnapshot = ros::param::get("url", url_param);
-    ros::param::param<int>("device", device_param, -1);
-    ros::param::param<int>("width", width_param, 640);
-    ros::param::param<int>("height", height_param, 480);
-    ros::param::param<double>("fps", fps, 28);
+    isSnapshot = node.getParam(ros::this_node::getName() + "/url", url_param);
+    // node.param<int>("device", device_param, -1);
+    node.param<int>(ros::this_node::getName() + "/width", width_param, 640);
+    node.param<int>(ros::this_node::getName() + "/height", height_param, 480);
+    node.param<double>(ros::this_node::getName() + "/fps", fps, 28);
 
 //     argc--; argv++;
 //     while( argc && *argv[0] == '-' )
@@ -67,10 +64,14 @@ int main(int argc, char *argv[])
     img_msg.encoding = "bgr8";
 
     if (!isSnapshot) {
-        if (ros::param::get("filename", filename_param)) 
+        if (node.getParam(ros::this_node::getName() + "/filename", filename_param)) 
             isCamOpened = cam.open(filename_param);
-        else
+        else if (node.getParam(ros::this_node::getName() + "/device", device_param))
             isCamOpened = cam.open(device_param);
+        else {
+            ROS_ERROR("camera_bridge fail!!, using default /dev/video%d", device_param);
+            isCamOpened = cam.open(device_param);
+        }
         cam.set(CV_CAP_PROP_FPS, fps*1.3);
         if(isCamOpened) {
             cam.set(CV_CAP_PROP_FRAME_HEIGHT, height_param);
@@ -82,6 +83,7 @@ int main(int argc, char *argv[])
         ROS_INFO("Opening /dev/video%d %ffps %dx%d", device_param, fps,
                  (int)cam.get(CV_CAP_PROP_FRAME_WIDTH), (int)cam.get(CV_CAP_PROP_FRAME_HEIGHT));
     else if ( ! isSnapshot) ROS_ERROR("Unknown error");
+    else ROS_INFO("Opening stream %s", url_param.c_str());
 
     while (ros::ok())
     {
