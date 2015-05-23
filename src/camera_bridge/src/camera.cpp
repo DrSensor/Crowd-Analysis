@@ -6,14 +6,16 @@
 
 //function to retrieve the image as Cv::Mat data type
 cv::Mat curlImg(const char *url);
-double fps=30;
 
 std::string url_param, filename_param;
 int device_param=-1;
-int width_param=640, height_param=480;
+int width_param, height_param;
+double fps;
+bool isPlayback;
 
 bool isSnapshot=false;
 bool isCamOpened=false;
+int frame_count=0;
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +27,7 @@ int main(int argc, char *argv[])
     node.param<int>(ros::this_node::getName() + "/width", width_param, 640);
     node.param<int>(ros::this_node::getName() + "/height", height_param, 480);
     node.param<double>(ros::this_node::getName() + "/fps", fps, 28);
+    node.param<bool>(ros::this_node::getName() + "/playback", isPlayback, true);
 
 //     argc--; argv++;
 //     while( argc && *argv[0] == '-' )
@@ -59,40 +62,51 @@ int main(int argc, char *argv[])
     ros::Rate loop_rate(fps);
 
     cv_bridge::CvImage img_msg;
-    cv::VideoCapture cam;
+    cv::VideoCapture capture;
 
     img_msg.encoding = "bgr8";
 
     if (!isSnapshot) {
         if (node.getParam(ros::this_node::getName() + "/filename", filename_param)) 
-            isCamOpened = cam.open(filename_param);
-        else if (node.getParam(ros::this_node::getName() + "/device", device_param))
-            isCamOpened = cam.open(device_param);
+            isCamOpened = capture.open(filename_param);
+        else if (node.getParam(ros::this_node::getName() + "/device", device_param)) {
+            isCamOpened = capture.open(device_param);
+            isPlayback = false;
+        }
         else {
             ROS_ERROR("camera_bridge fail!!, using default /dev/video%d", device_param);
-            isCamOpened = cam.open(device_param);
+            isCamOpened = capture.open(device_param);
+            isPlayback = false;
         }
-        cam.set(CV_CAP_PROP_FPS, fps*1.3);
+        capture.set(CV_CAP_PROP_FPS, fps*1.3);
         if(isCamOpened) {
-            cam.set(CV_CAP_PROP_FRAME_HEIGHT, height_param);
-            cam.set(CV_CAP_PROP_FRAME_WIDTH, width_param);
+            capture.set(CV_CAP_PROP_FRAME_HEIGHT, height_param);
+            capture.set(CV_CAP_PROP_FRAME_WIDTH, width_param);
         }
     }
 
     if (isCamOpened)
         ROS_INFO("Opening /dev/video%d %ffps %dx%d", device_param, fps,
-                 (int)cam.get(CV_CAP_PROP_FRAME_WIDTH), (int)cam.get(CV_CAP_PROP_FRAME_HEIGHT));
+                 (int)capture.get(CV_CAP_PROP_FRAME_WIDTH), (int)capture.get(CV_CAP_PROP_FRAME_HEIGHT));
     else if ( ! isSnapshot) ROS_ERROR("Unknown error");
     else ROS_INFO("Opening stream %s", url_param.c_str());
 
     while (ros::ok())
     {
-        if (isCamOpened) cam >> img_msg.image;
+        if (isCamOpened) {
+            capture >> img_msg.image;
+            frame_count++;
+            if (frame_count == capture.get(CV_CAP_PROP_FRAME_COUNT)) {
+                frame_count = 0;
+                capture.set(CV_CAP_PROP_POS_FRAMES, 0);
+            }
+        }
         else {
             if (!isSnapshot) ROS_ERROR("it's not snapshot");
             img_msg.image = curlImg(url_param.c_str());
         }
 
+        // if (!img_msg.image.empty()) 
         image_pub.publish(img_msg.toImageMsg());
         ros::spinOnce();
         loop_rate.sleep();
