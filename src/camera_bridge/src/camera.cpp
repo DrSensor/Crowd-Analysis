@@ -11,7 +11,7 @@ std::string url_param, filename_param;
 int device_param=-1;
 int width_param, height_param;
 double fps;
-bool isPlayback;
+int playback_limit, playback_counter=0;
 
 bool isSnapshot=false;
 bool isCamOpened=false;
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     node.param<int>(ros::this_node::getName() + "/width", width_param, 640);
     node.param<int>(ros::this_node::getName() + "/height", height_param, 480);
     node.param<double>(ros::this_node::getName() + "/fps", fps, 28);
-    node.param<bool>(ros::this_node::getName() + "/playback", isPlayback, true);
+    node.param<int>(ros::this_node::getName() + "/playback_limit", playback_limit, 1);
 
 //     argc--; argv++;
 //     while( argc && *argv[0] == '-' )
@@ -71,12 +71,12 @@ int main(int argc, char *argv[])
             isCamOpened = capture.open(filename_param);
         else if (node.getParam(ros::this_node::getName() + "/device", device_param)) {
             isCamOpened = capture.open(device_param);
-            isPlayback = false;
+            playback_limit = false;
         }
         else {
             ROS_ERROR("camera_bridge fail!!, using default /dev/video%d", device_param);
             isCamOpened = capture.open(device_param);
-            isPlayback = false;
+            playback_limit = false;
         }
         capture.set(CV_CAP_PROP_FPS, fps*1.3);
         if(isCamOpened) {
@@ -96,13 +96,15 @@ int main(int argc, char *argv[])
         if (isCamOpened) {
             capture >> img_msg.image;
             frame_count++;
-            if (frame_count == capture.get(CV_CAP_PROP_FRAME_COUNT)) {
+            if ((frame_count == capture.get(CV_CAP_PROP_FRAME_COUNT))) {
                 frame_count = 0;
-                capture.set(CV_CAP_PROP_POS_FRAMES, 0);
+                playback_counter++;
+                if (playback_limit != playback_counter) 
+                    capture.set(CV_CAP_PROP_POS_FRAMES, 0);
             }
         }
         else {
-            if (!isSnapshot) ROS_ERROR("it's not snapshot");
+            if (!isSnapshot) ROS_ERROR("it's not snapshot url");
             img_msg.image = curlImg(url_param.c_str());
         }
 
